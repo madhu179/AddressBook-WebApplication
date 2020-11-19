@@ -74,7 +74,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 const save = (event) => {
   event.preventDefault();
-  alert("The details are submitted");
+  let contactData = createContact();
+  let jsonObject = JSON.stringify(contactData);
+  alert(jsonObject);
+}
+
+const createContact = () => {
+  let contactData = new Contact();
+  let names = getInputValueById('#name').split(" ");
+  contactData.firstName = names[0];
+  contactData.lastName = names[1];
+  contactData.address = getInputValueById('#address');
+  contactData.city = getInputValueById('#city');
+  contactData.state = getInputValueById('#state');
+  contactData.zip = getInputValueById('#zip');
+  contactData.phone = getInputValueById('#phone');
+  contactData.email = getInputValueById('#email');
+  return contactData;
+}
+
+const getInputValueById = (id) => {
+  let value = document.querySelector(id).value;
+  return value;
 }
 
 const resetForm = () => {
