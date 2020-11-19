@@ -4,44 +4,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const textError = document.querySelector('.name-error');
   name.addEventListener('input', function () {
     let names = document.querySelector('#name').value.split(" ");
-    if (names[0].length == 0) {
+    if(name.value.length == 0){
       textError.textContent = "";
       return;
-    }
-    if (names.length == 2) {
-        let nameRegex = RegExp('^[A-Z][a-z]{2,}$')
-        if(!nameRegex.test(names[0]))
-        textError.textContent = 'First Name Invalid';
-        if(!nameRegex.test(names[1]))
-        textError.textContent = 'Last Name Invalid';
-        if(nameRegex.test(names[0])&&nameRegex.test(names[1]))
-        textError.textContent = "";
-    }
-    else {
-      let nameRegex = RegExp('^[A-Z][a-z]{2,}$');
-      if(!nameRegex.test(names[0]))
-      textError.textContent = 'First Name Invalid';
-      else
+  }
+  try{
+      (new Contact()).firstName = names[0];
+      (new Contact()).lastName = names[1];
       textError.textContent = "";
-    }
+  }catch(e){
+      textError.textContent = e;
+  }
   });
 
   const addressElement = document.querySelector('#address');
   const addressError = document.querySelector('.address-error');
   addressElement.addEventListener('input', function() {
     let address = document.querySelector('#address').value;
-    let words = address.split(" ");
-    if(words.length>1){
-      let addressRegex = RegExp('^[A-Za-z,.0-9]{3,}$');
-      for(word of words){
-        if(!addressRegex.test(word))
-          addressError.textContent = 'Each word should be atleast 3 letters';
-      else
-        addressError.textContent = "";
-      }
-    }
-    else{
-      addressError.textContent = "Address should have multiple words";
+    try{
+      (new Contact()).address = address;
+      addressError.textContent = ""
+    }catch(e){
+      addressError.textContent = e;
     }
   });
 
@@ -49,13 +33,12 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const phoneError = document.querySelector('.phone-error');
   phoneElement.addEventListener('input', function() {
     let phone = document.querySelector('#phone').value;
-    let phoneRegex1 = RegExp('^[1-9][0-9]{9}$');
-    let phoneRegex2 = RegExp('^[0-9]{2}[1-9][0-9]{9}$');
-    let phoneRegex3 = RegExp('^[+][0-9]{2}[1-9][0-9]{9}$');
-    if(phoneRegex1.test(phone) || phoneRegex2.test(phone) || phoneRegex3.test(phone))
-    phoneError.textContent = "";
-    else
-    phoneError.textContent = "Phone Number Invalid";
+    try{
+      (new Contact()).phone = phone;
+      phoneError.textContent = "";
+    }catch(e){
+      phoneError.textContent = e;
+    }
 
   });
 
@@ -63,17 +46,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
   const emailError = document.querySelector('.email-error');
   emailElement.addEventListener('input', function() {
     let email = document.querySelector('#email').value;
-    let emailRegex = RegExp('^[a-zA-Z]+[a-zA-Z_+.-]*[a-zA-Z]+@[a-zA-Z]+[.][a-zA-z]{2,}$');
-    if(emailRegex.test(email))
-    emailError.textContent = "";
-    else
-    emailError.textContent = "Email Invalid";
+    try{
+      (new Contact()).email = email;
+      emailError.textContent = "";
+    }catch(e){
+      emailError.textContent = e;
+    }
 
   });
 });
 
 const save = (event) => {
+  console.log("sdf");
   event.preventDefault();
+  event.stopPropagation();
   let contactData = createContact();
   let jsonObject = JSON.stringify(contactData);
   alert(jsonObject);
