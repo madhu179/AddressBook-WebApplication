@@ -1,6 +1,14 @@
+let contactList;
 window.addEventListener('DOMContentLoaded',(event) => {
+    contactList = getContactDataFromStorage();
+    document.querySelector(".person-count").textContent = contactList.length;
     createInnerHtml();
   });
+
+  const getContactDataFromStorage = () => {
+    return localStorage.getItem("ContactList") ?
+                        JSON.parse(localStorage.getItem('ContactList')) : [];
+  }
 
   const createInnerHtml = () => {
     const headerHtml = ` 
@@ -12,15 +20,13 @@ window.addEventListener('DOMContentLoaded',(event) => {
       <th>Phone Number</th>
       <th>Email</th>
     `;
-    let contactList = createContactJSON();
     if(contactList.length == 0) return;
-    document.querySelector(".person-count").textContent = contactList.length;
     let innerHtml = `${headerHtml}`;
     for(const contactData of contactList)
     {
     innerHtml = `${innerHtml}
     <tr>
-        <td>${contactData._firstName}${contactData._lastName}</td>
+        <td>${contactData._firstName} ${contactData._lastName}</td>
         <td>${contactData._address}</td>
         <td>${contactData._city}</td>
         <td>${contactData._state}</td>
@@ -37,30 +43,4 @@ window.addEventListener('DOMContentLoaded',(event) => {
     `;
     }
   document.querySelector('#table-display').innerHTML = innerHtml;
-  }
-
-  const createContactJSON = () => {
-    let contactListLocal = [
-    {
-        _firstName: "Anthony",
-        _lastName: "Stark",
-        _address: "10001 Malibu Point",
-        _city: "New York City",
-        _email: "tonystark@gmail.com",
-        _phone: "9876543210",
-        _state: "New York",
-        _zip: "10002",
-    },
-    {
-        _firstName: "Steve",
-        _lastName: "Rogers",
-        _address: "569 Leaman Place Brooklyn Heights",
-        _city: "New York City",
-        _email: "steverogers@Outlook.com",
-        _phone: "4567876576",
-        _state: "New York",
-        _zip: "53540",
-    }
-    ];
-    return contactListLocal;
   }
