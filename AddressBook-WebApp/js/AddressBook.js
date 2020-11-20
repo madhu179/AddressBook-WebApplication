@@ -47,7 +47,7 @@ class Contact{
     {
         let words = address.split(" ");
         if(words.length>1){
-            let addressRegex = RegExp('^[A-Za-z,.0-9]{3,}$');
+            let addressRegex = RegExp('^[A-Za-z,/.0-9]{3,}$');
             for(const word of words){
                 if(!addressRegex.test(word))
                 throw 'Address Invalid';

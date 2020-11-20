@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded',(event) => {
     contactList = getContactDataFromStorage();
     document.querySelector(".person-count").textContent = contactList.length;
     createInnerHtml();
+    localStorage.removeItem('editContact');
   });
 
   const getContactDataFromStorage = () => {
