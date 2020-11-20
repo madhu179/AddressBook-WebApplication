@@ -34,13 +34,23 @@ window.addEventListener('DOMContentLoaded',(event) => {
         <td>${contactData._phone}</td>
         <td>${contactData._email}</td>
         <td>
-        <img name="${contactData._id}" onclick="removie(this)" alt="delete" 
+        <img id="${contactData._id}" onclick="remove(this)" alt="delete" 
                 src="../assets/icons/delete-black-18dp.svg">
-        <img name="${contactData._id}" alt="edit" onclick="update(this)"
+        <img id="${contactData._id}" alt="edit" onclick="update(this)"
                 src="../assets/icons/create-black-18dp.svg">
         </td>
     </tr>
     `;
     }
   document.querySelector('#table-display').innerHTML = innerHtml;
+  }
+
+  const remove = (node) => {
+      let contact = contactList.find(cnt => cnt._id == node.id);
+      if(!contact) return;
+      const index = contactList.map(cnt => cnt._id).indexOf(contact._id);
+      contactList.splice(index,1);
+      document.querySelector(".person-count").textContent = contactList.length;
+      localStorage.setItem("ContactList",JSON.stringify(contactList));
+      createInnerHtml();
   }
