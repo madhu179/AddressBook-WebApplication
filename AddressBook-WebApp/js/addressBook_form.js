@@ -1,3 +1,6 @@
+let isUpdate = false;
+let contactObj;
+
 window.addEventListener('DOMContentLoaded', (event) => {
 
   const name = document.querySelector('#name'); 
@@ -54,6 +57,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
     }
 
   });
+
+  checkForUpdate();
 });
 
 const save = (event) => {
@@ -123,3 +128,28 @@ const setSelectedIndex = (id,index) => {
   const element = document.querySelector(id);
   element.selectedIndex = index;
 }
+
+const checkForUpdate = () => {
+  const contactJson = localStorage.getItem('editContact');
+  isUpdate = contactJson ? true : false;
+  if(!isUpdate) return;
+  contactObj = JSON.parse(contactJson);
+  setForm();
+}
+
+const setForm = () => {
+  setValue('#name', contactObj._firstName+" "+contactObj._lastName);
+  setValue('#address',contactObj._address);
+  // setSelectedIndex('#city',0);
+  // setSelectedIndex('#state',0);
+  setValue('#city',contactObj._city);
+  setValue('#state',contactObj._state);
+  setValue('#zip',contactObj._zip);
+  setValue('#phone',contactObj._phone);
+  setValue('#email',contactObj._email);
+}
+
+// const getIndex = (id,value) => {
+//   const element = document.querySelector(id);
+  
+// }

@@ -54,3 +54,10 @@ window.addEventListener('DOMContentLoaded',(event) => {
       localStorage.setItem("ContactList",JSON.stringify(contactList));
       createInnerHtml();
   }
+
+  const update = (node) => {
+    let contact = contactList.find(cnt => cnt._id == node.id);
+    if(!contact) return;
+    localStorage.setItem("editContact",JSON.stringify(contact));
+    window.location.replace(site_properties.add_contact_page);
+  }
